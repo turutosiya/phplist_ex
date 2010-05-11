@@ -165,7 +165,7 @@ AND
 AND
 	prospect_lists_prospects.deleted = 0	
 AND
-	prospect_lists.id = '$prospect_list_id'
+	prospect_lists_prospects.prospect_list_id = '$prospect_list_id'
 SQL;
   $sql = $select.$from;
 
