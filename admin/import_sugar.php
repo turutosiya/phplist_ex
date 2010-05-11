@@ -94,14 +94,14 @@ if (!$_POST["remote_host"] ||
   $_POST["remote_database"]);
   $c = 0;
   print '<tr><td colspan=2>';
-  if (sizeof($available_lists) > 1)
-    print $GLOBALS['I18N']->get('select_lists').'<br/>';
-  print '<ul>';
-  foreach ($available_lists as $index => $name) {
-    printf('<li><input type=checkbox name="lists[%d]" value="%d" %s>%s</li>',
-      $c,$index,is_array($_POST["lists"]) && in_array($index,array_values($_POST["lists"]))?"checked":"",$name);
-    $c++;
-  }
+#   if (sizeof($available_lists) > 1)
+#     print $GLOBALS['I18N']->get('select_lists').'<br/>';
+#   print '<ul>';
+#   foreach ($available_lists as $index => $name) {
+#     printf('<li><input type=checkbox name="lists[%d]" value="%d" %s>%s</li>',
+#      $c,$index,is_array($_POST["lists"]) && in_array($index,array_values($_POST["lists"]))?"checked":"",$name);
+#    $c++;
+#  }
 
   connectRemote();
   $r = Sql_Query("select id, name from prospect_lists where deleted = 0");
@@ -135,6 +135,7 @@ if (!$_POST["remote_host"] ||
   }
   print $GLOBALS['I18N']->get('getting_data').' '.$_POST["remote_database"]."@".$_POST["remote_host"]."<br/>";
 
+  $prospect_list_id = $_POST['prospect_list_id'];
   $select = <<<SQL
 SELECT
 	prospect_lists_prospects.related_id foreignkey,
@@ -164,7 +165,7 @@ AND
 AND
 	prospect_lists_prospects.deleted = 0	
 AND
-	prospect_lists.id = $_POST["prospect_list_id"]
+	prospect_lists.id = '$prospect_list_id'
 SQL;
   $sql = $select.$from;
 
